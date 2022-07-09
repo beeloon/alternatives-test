@@ -4,9 +4,11 @@ import Fastify, {
     FastifyLoggerOptions,
     RouteShorthandOptions,
 } from 'fastify';
+import cache from '../plugin/cache';
 
 const environment = process.env.NODE_ENV ?? 'development';
 
+// Create a new instance of Fastify.
 const loggerOptions: FastifyLoggerOptions = {
     prettyPrint:
         environment === 'development'
@@ -18,6 +20,9 @@ const loggerOptions: FastifyLoggerOptions = {
 };
 
 const server: FastifyInstance = Fastify({ logger: loggerOptions });
+
+// Register plugins
+server.register(cache);
 
 const opts: RouteShorthandOptions = {
     schema: {
